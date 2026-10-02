@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BTB Image Denoising OEL</title>
+  <meta name="description" content="Method-level reproduction of Pereg's BTB iterative image denoising framework using NLM.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <span class="badge">EEE 3218 · Digital Signal Processing Lab · AUST</span>
+      <h1>BTB Image Denoising OEL</h1>
+      <p class="lead">A method-level reproduction of the Back-to-Basics iterative denoising framework from Pereg (2024), implemented in Python with Non-Local Means as the base denoiser.</p>
+      <div class="actions">
+        <a class="btn" href="downloads/btb_denoising.py" download>Download Python Code</a>
+        <a class="btn secondary" href="downloads/EEE3218_BTB_OEL_Report.pdf">View Report</a>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><span class="muted">Author</span><strong>Tamjid Tahmid</strong><span>20230105012</span></div>
+        <div class="kpi"><span class="muted">Main test</span><strong>σ = 15</strong><span>AWGN</span></div>
+        <div class="kpi"><span class="muted">Framework</span><strong>BTB + NLM</strong><span>Method-level reproduction</span></div>
+      </div>
+    </header>
+
+    <section>
+      <div class="card">
+        <h2>Core idea</h2>
+        <p>The BTB framework repeatedly applies a base denoiser and blends the denoised estimate with the previous estimate.</p>
+        <pre>z_(t+1) = f(x_t)
+x_(t+1) = (1 - μ)x_t + μz_(t+1)</pre>
+        <p class="muted">In this reproduction, f(.) is Non-Local Means. The original paper uses pretrained TNRD for its natural-image experiment.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid">
+        <div class="card full">
+          <h2>Original → Noisy → BTB Denoised</h2>
+          <img src="assets/denoising_comparison.png" alt="Original, noisy and BTB denoised image comparison">
+          <p>The displayed BTB result is visually smoother. For this selected reference image, PSNR changes from 24.86 dB for the noisy input to 24.42 dB after BTB + NLM, showing that visual smoothing can still remove reference details and reduce pixel-fidelity metrics.</p>
+        </div>
+        <div class="card">
+          <h2>Noise sensitivity</h2>
+          <img src="assets/noise_sensitivity.png" alt="Noise level versus PSNR">
+          <p>With the selected fixed parameters, BTB + NLM becomes more useful at the stronger tested noise level, while lower-noise cases can be over-smoothed.</p>
+        </div>
+        <div class="card">
+          <h2>Iteration sensitivity</h2>
+          <img src="assets/iteration_sensitivity.png" alt="BTB iterations versus PSNR">
+          <p>PSNR falls as repeated NLM-based iterations increase for this image, which is a clear example of over-smoothing.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid">
+        <div class="card">
+          <h2>Evaluation</h2>
+          <p><strong>MSE:</strong> lower is better.</p>
+          <p><strong>PSNR:</strong> higher generally means closer numerical similarity to the reference.</p>
+          <p><strong>SSIM:</strong> higher means stronger structural similarity.</p>
+        </div>
+        <div class="card">
+          <h2>Critical finding</h2>
+          <p>BTB is a framework rather than a single fixed filter. Its performance depends on the base denoiser, the noise level, μ, and the number of iterations. This experiment demonstrates why parameter sensitivity must be reported rather than assuming more iterations are always better.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>Reference</h2>
+        <p>Deborah Pereg, “Back to basics: Fast denoising iterative algorithm,” <em>Signal Processing</em>, 221, 109482, 2024. DOI: <a href="https://doi.org/10.1016/j.sigpro.2024.109482">10.1016/j.sigpro.2024.109482</a>.</p>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap">Tamjid Tahmid · EEE, AUST · EEE 3218 Digital Signal Processing Lab</div></footer>
+</body>
+</html>
