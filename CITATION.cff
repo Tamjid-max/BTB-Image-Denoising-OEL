@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: "BTB Image Denoising OEL"
+message: "If you use this student implementation, please cite this repository and the original Pereg (2024) paper."
+type: software
+authors:
+  - family-names: "Tahmid"
+    given-names: "Tamjid"
+year: 2026
+license: MIT
+repository-code: "https://github.com/Tamjid-max/BTB-Image-Denoising-OEL"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Pereg"
+      given-names: "Deborah"
+  title: "Back to basics: Fast denoising iterative algorithm"
+  journal: "Signal Processing"
+  volume: 221
+  year: 2024
+  doi: "10.1016/j.sigpro.2024.109482"
